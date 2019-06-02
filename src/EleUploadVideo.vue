@@ -167,6 +167,7 @@ export default {
 
     // 删除视频
     handleDeleteVideo () {
+      this.$emit('delete')
       this.$emit('input', '')
     },
 
@@ -189,6 +190,7 @@ export default {
   position: relative;
   font-size: 0;
   border-radius: 6px;
+  line-height: 1;
 }
 
 .ele-upload-video_video__mask {

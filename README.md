@@ -13,7 +13,7 @@ vue-ele-upload-video 对 element-ui 中 upload 组件进一步封装，使得视
 
 ![效果图](./public/example.gif)
 
-## 示例
+## 在线示例
 
 [https://codepen.io/dream2023/pen/ZNVvBg/](https://codepen.io/dream2023/pen/ZNVvBg/)
 
