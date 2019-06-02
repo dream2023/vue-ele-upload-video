@@ -1,4 +1,4 @@
-# vue-ele-upload-video | 让 element-ui steps 更简单
+# vue-ele-upload-video | 使得视频上传更加容易
 
 [![MIT Licence](https://badges.frapsoft.com/os/mit/mit.svg)](https://opensource.org/licenses/mit-license.php)
 [![npm](https://img.shields.io/npm/v/vue-ele-upload-video.svg)](https://www.npmjs.com/package/vue-ele-upload-video)
