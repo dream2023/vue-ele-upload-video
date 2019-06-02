@@ -1,7 +1,7 @@
 {
   "name": "vue-ele-upload-video",
   "description": "vue-ele-upload-video 对 element-ui 中 upload 组件进一步封装，使得视频上传更加容易",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "private": false,
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -22,7 +22,9 @@
     "element video",
     "element-ui video"
   ],
-  "dependencies": {},
+  "dependencies": {
+    "vue-hover-mask": "^1.0.0"
+  },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.8.0",
     "@vue/cli-plugin-eslint": "^3.8.0",

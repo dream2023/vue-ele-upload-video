@@ -30,8 +30,8 @@
           <em>点击上传</em>
         </div>
         <div
-          class="el-upload__tip"
           slot="tip"
+          style="margin-top: 8px;"
         >
           请保证视频格式正确，且文件大小不超过
           <span style="color: #F56C6C">{{limit}}</span>&nbsp;M
@@ -40,31 +40,27 @@
     </el-upload>
 
     <!-- 视频缩略 -->
-    <div
-      :style="{width: width + 'px', height: height ? height + 'px' : 'auto'}"
-      class="ele-upload-video_video__wrapper"
-      v-if="value"
-    >
+    <vue-hover-mask v-if="value">
       <video
         :autoplay="false"
         :src="value"
-        class="ele-upload-video_video"
+        :style="{width: width + 'px', height: height ? height + 'px' : 'auto'}"
       >您的浏览器不支持视频播放</video>
-      <div class="ele-upload-video_video__mask">
+      <template v-slot:action>
         <span
           @click="handlePlayerVideo"
-          class="ele-upload-video_video__mask__item"
+          class="ele-upload-video_mask__item"
         >
           <i class="el-icon-zoom-in"></i>
         </span>
         <span
           @click="handleDeleteVideo"
-          class="ele-upload-video_video__mask__item"
+          class="ele-upload-video_mask__item"
         >
           <i class="el-icon-delete"></i>
         </span>
-      </div>
-    </div>
+      </template>
+    </vue-hover-mask>
 
     <!-- 弹窗播放 -->
     <el-dialog :visible.sync="isShowVideo">
@@ -80,8 +76,13 @@
 </template>
 
 <script>
+import VueHoverMask from 'vue-hover-mask/src/index'
+
 export default {
   name: 'EleUploadVideo',
+  components: {
+    VueHoverMask
+  },
   props: {
     // 值
     value: {
@@ -180,55 +181,7 @@ export default {
 </script>
 
 <style>
-.ele-upload-video .el-upload__tip {
-  margin-top: 8px;
-}
-
-.ele-upload-video_video__wrapper {
-  cursor: pointer;
-  display: inline-block;
-  position: relative;
-  font-size: 0;
-  border-radius: 6px;
-  line-height: 1;
-}
-
-.ele-upload-video_video__mask {
-  z-index: 1;
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  left: 0;
-  top: 0;
-  text-align: center;
-  color: #fff;
-  opacity: 0;
-  font-size: 20px;
-  display: inline-block;
-  background-color: rgba(3, 2, 2, 0.3);
-  transition: opacity 0.3s;
-  border-radius: inherit;
-}
-
-.ele-upload-video_video__mask:hover {
-  opacity: 1;
-}
-
-.ele-upload-video_video__mask::after {
-  display: inline-block;
-  content: "";
-  height: 100%;
-  vertical-align: middle;
-}
-
-.ele-upload-video_video__mask__item {
+.ele-upload-video_mask__item {
   padding: 0 10px;
-}
-
-.ele-upload-video_video {
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.1);
-  border-radius: inherit;
 }
 </style>
