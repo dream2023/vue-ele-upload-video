@@ -156,6 +156,7 @@ export default {
     // 上传成功
     handleUploadSuccess (response, file, fileList) {
       this.videoUploadPercent = 0
+      this.$message.success('上传成功!')
       this.$emit('success', response, file, fileList)
     },
 
