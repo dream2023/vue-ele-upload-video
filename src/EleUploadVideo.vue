@@ -63,7 +63,10 @@
     </vue-hover-mask>
 
     <!-- 弹窗播放 -->
-    <el-dialog :visible.sync="isShowVideo">
+    <el-dialog
+      :visible.sync="isShowVideo"
+      append-to-body
+    >
       <video
         :autoplay="true"
         :src="value"
