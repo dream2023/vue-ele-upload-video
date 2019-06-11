@@ -89,8 +89,7 @@ export default {
   props: {
     // 值
     value: {
-      type: String,
-      required: true
+      type: String
     },
     // 上传地址
     url: {
@@ -117,10 +116,7 @@ export default {
     },
     // 文件类型
     fileType: {
-      type: Array,
-      default () {
-        return ['video/mp4', 'video/ogg', 'video/flv', 'video/avi', 'video/wmv', 'video/rmvb']
-      }
+      type: Array
     },
     // upload组件属性
     customAttrs: {

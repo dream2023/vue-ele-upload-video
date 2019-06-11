@@ -17,7 +17,7 @@ export default {
   data () {
     return {
       token: 'Nx6ehv5XlzuIhvP1mvVffM_jZbsyLErLMc4B2Gor:AkxaVbVUr5d76RGbM6t2NMFhI6o=:eyJzY29wZSI6ImxlYWd1ZSIsImRlYWRsaW5lIjoxNTU5Mzk2MTE4fQ==',
-      video: 'https://s3.pstatp.com/aweme/resource/web/static/image/index/tvc-v2_30097df.mp4'
+      video: null
     }
   },
   methods: {
