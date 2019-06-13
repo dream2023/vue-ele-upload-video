@@ -33,7 +33,10 @@
           slot="tip"
           style="margin-top: 8px;"
         >
-          请保证视频格式正确，且文件大小不超过
+          请上传
+          <span
+            style="color: #F56C6C"
+          >&nbsp;{{this.fileType ? this.fileType.join('/') : '视频'}}&nbsp;</span>格式文件，且文件大小不超过
           <span style="color: #F56C6C">{{limit}}</span>&nbsp;M
         </div>
       </template>
@@ -133,10 +136,18 @@ export default {
     // 上传大小和格式检测
     handleBeforeUploadVideo (file) {
       // 校检格式
-      if (!this.fileType.includes(file.type)) {
+      let isVideo = false
+      if (Array.isArray(this.fileType)) {
+        isVideo = this.fileType.includes(file.type)
+      } else {
+        isVideo = file.type.includes('video')
+      }
+
+      if (!isVideo) {
         this.$message.error(`${file.name}格式不正确, 请上传格式正确的视频`)
         return false
       }
+
       // 校检文件大小
       const isLt = file.size / 1024 / 1024 < this.limit
       if (!isLt) {

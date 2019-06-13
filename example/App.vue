@@ -1,13 +1,11 @@
 <template>
   <ele-upload-video
-    :data="{
-        token: token
-      }"
+    :file-type="['mp4', 'avi']"
     :limit="20"
     @error="handleUploadError"
     @success="handleUploadSuccess"
     style="margin: 50px"
-    url="https://upload.qiniup.com/"
+    url="ttps://jsonplaceholder.typicode.com/posts/"
     v-model="video"
   />
 </template>
@@ -16,7 +14,6 @@
 export default {
   data () {
     return {
-      token: 'Nx6ehv5XlzuIhvP1mvVffM_jZbsyLErLMc4B2Gor:AkxaVbVUr5d76RGbM6t2NMFhI6o=:eyJzY29wZSI6ImxlYWd1ZSIsImRlYWRsaW5lIjoxNTU5Mzk2MTE4fQ==',
       video: null
     }
   },
