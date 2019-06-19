@@ -51,7 +51,7 @@ export default {
     }"
     :limit="20"
     @error="handleUploadError"
-    @success="handleUploadSuccess"
+    :responseFn="handleResponse"
     style="margin: 50px"
     url="https://upload.qiniup.com/"
     v-model="video"
@@ -71,10 +71,8 @@ export default {
       handleUploadError(error) {
         console.log('error', error)
       },
-      handleUploadSuccess(response) {
-        // 上传成功后, 根据响应结果进行 url 拼接
-        const { key } = response
-        this.video = 'https://xxx.qiudin.com/' + key
+      handleResponse(response) {
+        return 'https://www.xxx.com/upload/video/' + response.id
       }
     }
   }
@@ -100,6 +98,8 @@ props: {
     type: Number,
     default: 10
   },
+  // 响应处理函数
+  responseFn: Function,
   // 显示宽度(px)
   width: {
     type: Number,

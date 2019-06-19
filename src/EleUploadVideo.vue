@@ -99,6 +99,8 @@ export default {
       type: String,
       required: true
     },
+    // 响应处理函数
+    responseFn: Function,
     // 文件大小限制(Mb), 默认10Mb
     limit: {
       type: Number,
@@ -138,7 +140,8 @@ export default {
       // 校检格式
       let isVideo = false
       if (Array.isArray(this.fileType)) {
-        isVideo = this.fileType.includes(file.type)
+        const type = file.type.split('/')
+        isVideo = type[0] === 'video' && this.fileType.includes(type[1])
       } else {
         isVideo = file.type.includes('video')
       }
@@ -164,10 +167,14 @@ export default {
     },
 
     // 上传成功
-    handleUploadSuccess (response, file, fileList) {
+    handleUploadSuccess (response, file) {
       this.videoUploadPercent = 0
       this.$message.success('上传成功!')
-      this.$emit('success', response, file, fileList)
+      if (this.responseFn) {
+        this.$emit('input', this.responseFn(response, file))
+      } else {
+        this.$emit('input', response)
+      }
     },
 
     // 上传失败
@@ -180,7 +187,7 @@ export default {
     // 删除视频
     handleDeleteVideo () {
       this.$emit('delete')
-      this.$emit('input', '')
+      this.$emit('input', null)
     },
 
     // 播放视频
