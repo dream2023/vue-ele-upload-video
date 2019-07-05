@@ -30,8 +30,8 @@
           <em>点击上传</em>
         </div>
         <div
+          class="el-upload__tip"
           slot="tip"
-          style="margin-top: 8px;"
         >
           请上传
           <span
