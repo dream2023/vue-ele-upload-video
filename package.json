@@ -1,11 +1,11 @@
 {
   "name": "vue-ele-upload-video",
   "description": "vue-ele-upload-video 对 element-ui 中 upload 组件进一步封装，使得视频上传更加容易",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "private": false,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue build -t lib --name vue-ele-upload-video -d ./dist/ ./src/index.js",
+    "build": "vue build -t lib --name vue-ele-upload-video -d ./dist/ ./lib/index.js",
     "lint": "vue-cli-service lint"
   },
   "repository": {
