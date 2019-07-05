@@ -2,7 +2,7 @@
   <div class="ele-upload-video">
     <!-- 上传组件 -->
     <el-upload
-      :action="url"
+      :action="action"
       :before-upload="handleBeforeUploadVideo"
       :data="data"
       :disabled="videoUploadPercent > 0 && videoUploadPercent < 100"
@@ -95,7 +95,7 @@ export default {
       type: String
     },
     // 上传地址
-    url: {
+    action: {
       type: String,
       required: true
     },

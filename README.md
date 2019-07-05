@@ -53,7 +53,7 @@ export default {
     @error="handleUploadError"
     :responseFn="handleResponse"
     style="margin: 50px"
-    url="https://upload.qiniup.com/"
+    action="https://upload.qiniup.com/"
     v-model="video"
   />
 </template>
@@ -89,7 +89,7 @@ props: {
     required: true
   },
   // 上传地址
-  url: {
+  action: {
     type: String,
     required: true
   },

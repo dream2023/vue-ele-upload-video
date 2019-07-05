@@ -12,7 +12,7 @@
     "type": "git",
     "url": "https://github.com/dream2023/vue-ele-upload-video"
   },
-  "main": "dist/vue-ele-upload-video.umd.min.js",
+  "main": "lib/index.js",
   "homepage": "https://github.com/dream2023/vue-ele-upload-video/",
   "keywords": [
     "vue-ele-upload-video",
