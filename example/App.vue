@@ -4,6 +4,7 @@
     :responseFn="handleResponse"
     @error="handleUploadError"
     action="https://jsonplaceholder.typicode.com/posts/"
+    name="video"
     style="margin: 50px"
     v-model="video"
   />

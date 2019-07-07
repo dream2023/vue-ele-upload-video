@@ -2,16 +2,20 @@
   <div class="ele-upload-video">
     <!-- 上传组件 -->
     <el-upload
+      :accept="accept"
       :action="action"
       :before-upload="handleBeforeUploadVideo"
       :data="data"
       :disabled="videoUploadPercent > 0 && videoUploadPercent < 100"
+      :headers="headers"
+      :httpRequest="httpRequest"
+      :name="name"
       :on-error="handleUploadError"
       :on-progress="handleUploadProcess"
       :on-success="handleUploadSuccess"
       :show-file-list="false"
+      :withCredentials="withCredentials"
       drag
-      v-bind="customAttrs"
       v-if="!value"
     >
       <!-- 上传进度 -->
@@ -32,12 +36,16 @@
         <div
           class="el-upload__tip"
           slot="tip"
+          v-if="isShowTip"
         >
           请上传
           <span
             style="color: #F56C6C"
-          >&nbsp;{{this.fileType ? this.fileType.join('/') : '视频'}}&nbsp;</span>格式文件，且文件大小不超过
-          <span style="color: #F56C6C">{{fileSize}}</span>&nbsp;MB
+          >&nbsp;{{this.fileType ? this.fileType.join('/') : '视频'}}&nbsp;</span>格式文件
+          <template v-if="fileSize">
+            ，且文件大小不超过
+            <span style="color: #F56C6C">{{fileSize}}</span>&nbsp;MB
+          </template>
         </div>
       </template>
     </el-upload>
@@ -101,10 +109,9 @@ export default {
     },
     // 响应处理函数
     responseFn: Function,
-    // 文件大小限制(Mb), 默认10Mb
+    // 文件大小限制(Mb)
     fileSize: {
-      type: Number,
-      default: 10
+      type: Number
     },
     // 显示宽度(px)
     width: {
@@ -115,18 +122,35 @@ export default {
     height: {
       type: Number
     },
-    // 上传时附带的数据, 选填
-    data: {
-      type: Object
+    // 是否显示提示
+    isShowTip: {
+      type: Boolean,
+      default: true
     },
     // 文件类型
     fileType: {
       type: Array
     },
-    // upload组件属性
-    customAttrs: {
+     // 设置上传的请求头部(同官网)
+    headers: Object,
+    // 支持发送 cookie 凭证信息 (同官网)
+    withCredentials: {
+      type: Boolean,
+      default: false
+    },
+    // 上传时附带的额外参数(同官网)
+    data: {
       type: Object
-    }
+    },
+    // 上传的文件字段名 (同官网)
+    name: {
+      type: String,
+      default: 'file'
+    },
+      // 覆盖默认的上传行为，可以自定义上传的实现 (同官网)
+    httpRequest: Function,
+    // 接受上传的文件类型（thumbnail-mode 模式下此参数无效）(同官网)
+    accept: String
   },
   data () {
     return {
@@ -152,12 +176,13 @@ export default {
       }
 
       // 校检文件大小
-      const isLt = file.size / 1024 / 1024 < this.fileSize
-      if (!isLt) {
-        this.$message.error(`上传视频大小不能超过${this.fileSize}MB哦!`)
-        return false
+      if (this.fileSize) {
+        const isLt = file.size / 1024 / 1024 < this.fileSize
+        if (!isLt) {
+          this.$message.error(`上传视频大小不能超过${this.fileSize}MB哦!`)
+          return false
+        }
       }
-
       return true
     },
 

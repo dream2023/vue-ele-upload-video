@@ -85,21 +85,19 @@ export default {
 props: {
   // 值
   value: {
-    type: String,
-    required: true
+    type: String
   },
   // 上传地址
   action: {
     type: String,
     required: true
   },
-  // 文件大小限制(Mb), 默认10Mb
-  fileSize: {
-    type: Number,
-    default: 10
-  },
   // 响应处理函数
   responseFn: Function,
+  // 文件大小限制(Mb)
+  fileSize: {
+    type: Number
+  },
   // 显示宽度(px)
   width: {
     type: Number,
@@ -109,21 +107,35 @@ props: {
   height: {
     type: Number
   },
-  // 上传时附带的数据, 选填
-  data: {
-    type: Object
+  // 是否显示提示
+  isShowTip: {
+    type: Boolean,
+    default: true
   },
   // 文件类型
   fileType: {
-    type: Array,
-    default () {
-      return ['video/mp4', 'video/ogg', 'video/flv', 'video/avi', 'video/wmv', 'video/rmvb']
-    }
+    type: Array
   },
-  // upload组件自定义其他属性
-  customAttrs: {
+    // 设置上传的请求头部(同官网)
+  headers: Object,
+  // 支持发送 cookie 凭证信息 (同官网)
+  withCredentials: {
+    type: Boolean,
+    default: false
+  },
+  // 上传时附带的额外参数(同官网)
+  data: {
     type: Object
-  }
+  },
+  // 上传的文件字段名 (同官网)
+  name: {
+    type: String,
+    default: 'file'
+  },
+    // 覆盖默认的上传行为，可以自定义上传的实现 (同官网)
+  httpRequest: Function,
+  // 接受上传的文件类型（thumbnail-mode 模式下此参数无效）(同官网)
+  accept: String
 }
 ```
 
