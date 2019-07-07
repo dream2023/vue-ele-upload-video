@@ -37,7 +37,7 @@
           <span
             style="color: #F56C6C"
           >&nbsp;{{this.fileType ? this.fileType.join('/') : '视频'}}&nbsp;</span>格式文件，且文件大小不超过
-          <span style="color: #F56C6C">{{limit}}</span>&nbsp;M
+          <span style="color: #F56C6C">{{fileSize}}</span>&nbsp;MB
         </div>
       </template>
     </el-upload>
@@ -102,7 +102,7 @@ export default {
     // 响应处理函数
     responseFn: Function,
     // 文件大小限制(Mb), 默认10Mb
-    limit: {
+    fileSize: {
       type: Number,
       default: 10
     },
@@ -152,9 +152,9 @@ export default {
       }
 
       // 校检文件大小
-      const isLt = file.size / 1024 / 1024 < this.limit
+      const isLt = file.size / 1024 / 1024 < this.fileSize
       if (!isLt) {
-        this.$message.error(`上传视频大小不能超过${this.limit}MB哦!`)
+        this.$message.error(`上传视频大小不能超过${this.fileSize}MB哦!`)
         return false
       }
 

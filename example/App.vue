@@ -1,6 +1,6 @@
 <template>
   <ele-upload-video
-    :limit="20"
+    :fileSize="20"
     :responseFn="handleResponse"
     @error="handleUploadError"
     action="https://jsonplaceholder.typicode.com/posts/"

@@ -49,7 +49,7 @@ export default {
     :data="{
       token: token
     }"
-    :limit="20"
+    :fileSize="20"
     @error="handleUploadError"
     :responseFn="handleResponse"
     style="margin: 50px"
@@ -94,7 +94,7 @@ props: {
     required: true
   },
   // 文件大小限制(Mb), 默认10Mb
-  limit: {
+  fileSize: {
     type: Number,
     default: 10
   },
