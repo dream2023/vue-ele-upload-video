@@ -36,7 +36,7 @@
         <div
           class="el-upload__tip"
           slot="tip"
-          v-if="isShowTip"
+          v-if="showTip"
         >
           请上传
           <span
@@ -158,6 +158,12 @@ export default {
       videoUploadPercent: 0
     }
   },
+  computed: {
+    // 是否显示提示
+    showTip() {
+      return this.isShowTip && (this.fileType || this.fileSize)
+    }
+  },
   methods: {
     // 上传大小和格式检测
     handleBeforeUploadVideo (file) {
@@ -226,5 +232,9 @@ export default {
 <style>
 .ele-upload-video_mask__item {
   padding: 0 10px;
+}
+
+.ele-upload-video .el-upload__tip {
+  line-height: 12px;
 }
 </style>
