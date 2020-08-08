@@ -27,18 +27,18 @@ npm install vue-ele-upload-video --save
 
 ```js
 // 全局引入
-import EleUploadVideo from 'vue-ele-upload-video'
-Vue.component(EleUploadVideo.name, EleUploadVideo)
+import EleUploadVideo from "vue-ele-upload-video";
+Vue.component(EleUploadVideo.name, EleUploadVideo);
 ```
 
 ```js
 // 局部引入
-import EleUploadVideo from 'vue-ele-upload-video'
+import EleUploadVideo from "vue-ele-upload-video";
 export default {
   components: {
     EleUploadVideo
   }
-}
+};
 ```
 
 ## 示例(上传到七牛云)
@@ -63,19 +63,19 @@ export default {
     data() {
       return {
         // 上传时需要携带后台请求的token
-        token: 'xxxx',
-        video: ''
-      }
+        token: "xxxx",
+        video: ""
+      };
     },
     methods: {
       handleUploadError(error) {
-        console.log('error', error)
+        console.log("error", error);
       },
       handleResponse(response) {
-        return 'https://www.xxx.com/upload/video/' + response.id
+        return "https://www.xxx.com/upload/video/" + response.id;
       }
     }
-  }
+  };
 </script>
 ```
 
@@ -112,6 +112,11 @@ props: {
     type: Boolean,
     default: true
   },
+  // 是否显示上传成功的提示
+  isShowSuccessTip: {
+    type: Boolean,
+    default: true,
+  },
   // 文件类型
   fileType: {
     type: Array
@@ -135,7 +140,9 @@ props: {
     // 覆盖默认的上传行为，可以自定义上传的实现 (同官网)
   httpRequest: Function,
   // 接受上传的文件类型（thumbnail-mode 模式下此参数无效）(同官网)
-  accept: String
+  accept: String,
+  // 删除前的操作(同官网)
+  beforeRemove: Function,
 }
 ```
 

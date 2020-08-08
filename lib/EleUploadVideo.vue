@@ -33,18 +33,17 @@
           将视频拖到此处，或
           <em>点击上传</em>
         </div>
-        <div
-          class="el-upload__tip"
-          slot="tip"
-          v-if="showTip"
-        >
+        <div class="el-upload__tip" slot="tip" v-if="showTip">
           请上传
-          <span
-            style="color: #F56C6C"
-          >&nbsp;{{this.fileType ? this.fileType.join('/') : '视频'}}&nbsp;</span>格式文件
+          <span style="color: #f56c6c;"
+            >&nbsp;{{
+              this.fileType ? this.fileType.join("/") : "视频"
+            }}&nbsp;</span
+          >格式文件
           <template v-if="fileSize">
             ，且文件大小不超过
-            <span style="color: #F56C6C">{{fileSize}}</span>&nbsp;MB
+            <span style="color: #f56c6c;">{{ fileSize }}</span
+            >&nbsp;MB
           </template>
         </div>
       </template>
@@ -55,178 +54,202 @@
       <video
         :autoplay="false"
         :src="value"
-        :style="{width: width + 'px', height: height ? height + 'px' : 'auto'}"
-      >您的浏览器不支持视频播放</video>
+        :style="{
+          width: width + 'px',
+          height: height ? height + 'px' : 'auto',
+        }"
+      >
+        您的浏览器不支持视频播放
+      </video>
       <template v-slot:action>
-        <span
-          @click="handlePlayerVideo"
-          class="ele-upload-video_mask__item"
-        >
+        <span @click="handlePlayerVideo" class="ele-upload-video_mask__item">
           <i class="el-icon-zoom-in"></i>
         </span>
-        <span
-          @click="handleDeleteVideo"
-          class="ele-upload-video_mask__item"
-        >
+        <span @click="handleRemove" class="ele-upload-video_mask__item">
           <i class="el-icon-delete"></i>
         </span>
       </template>
     </vue-hover-mask>
 
     <!-- 弹窗播放 -->
-    <el-dialog
-      :visible.sync="isShowVideo"
-      append-to-body
-    >
+    <el-dialog :visible.sync="isShowVideo" append-to-body>
       <video
         :autoplay="true"
         :src="value"
         controls="controls"
-        style="width: 100%"
+        style="width: 100%;"
         v-if="isShowVideo"
-      >您的浏览器不支持视频播放</video>
+      >
+        您的浏览器不支持视频播放
+      </video>
     </el-dialog>
   </div>
 </template>
 
 <script>
-import VueHoverMask from 'vue-hover-mask/src/index'
+import VueHoverMask from "vue-hover-mask";
 
 export default {
-  name: 'EleUploadVideo',
+  name: "EleUploadVideo",
   components: {
-    VueHoverMask
+    VueHoverMask,
   },
   props: {
     // 值
     value: {
-      type: String
+      type: String,
     },
     // 上传地址
     action: {
       type: String,
-      required: true
+      required: true,
     },
     // 响应处理函数
     responseFn: Function,
     // 文件大小限制(Mb)
     fileSize: {
-      type: Number
+      type: Number,
     },
     // 显示宽度(px)
     width: {
       type: Number,
-      default: 360
+      default: 360,
     },
     // 显示高度(默认auto)
     height: {
-      type: Number
+      type: Number,
     },
     // 是否显示提示
     isShowTip: {
       type: Boolean,
-      default: true
+      default: true,
+    },
+    // 是否显示上传成功的提示
+    isShowSuccessTip: {
+      type: Boolean,
+      default: true,
     },
     // 文件类型
     fileType: {
-      type: Array
+      type: Array,
     },
-     // 设置上传的请求头部(同官网)
+    // 设置上传的请求头部(同官网)
     headers: Object,
     // 支持发送 cookie 凭证信息 (同官网)
     withCredentials: {
       type: Boolean,
-      default: false
+      default: false,
     },
     // 上传时附带的额外参数(同官网)
     data: {
-      type: Object
+      type: Object,
     },
     // 上传的文件字段名 (同官网)
     name: {
       type: String,
-      default: 'file'
+      default: "file",
     },
-      // 覆盖默认的上传行为，可以自定义上传的实现 (同官网)
+    // 覆盖默认的上传行为，可以自定义上传的实现 (同官网)
     httpRequest: Function,
     // 接受上传的文件类型（thumbnail-mode 模式下此参数无效）(同官网)
-    accept: String
+    accept: String,
+    // 删除前的操作(同官网)
+    beforeRemove: Function,
   },
-  data () {
+  data() {
     return {
       isShowVideo: false,
-      videoUploadPercent: 0
-    }
+      videoUploadPercent: 0,
+    };
   },
   computed: {
     // 是否显示提示
     showTip() {
-      return this.isShowTip && (this.fileType || this.fileSize)
-    }
+      return this.isShowTip && (this.fileType || this.fileSize);
+    },
   },
   methods: {
     // 上传大小和格式检测
-    handleBeforeUploadVideo (file) {
+    handleBeforeUploadVideo(file) {
       // 校检格式
-      let isVideo = false
+      let isVideo = false;
       if (Array.isArray(this.fileType)) {
-        const type = file.type.split('/')
-        isVideo = type[0] === 'video' && this.fileType.includes(type[1])
+        const type = file.type.split("/");
+        isVideo = type[0] === "video" && this.fileType.includes(type[1]);
       } else {
-        isVideo = file.type.includes('video')
+        isVideo = file.type.includes("video");
       }
 
       if (!isVideo) {
-        this.$message.error(`${file.name}格式不正确, 请上传格式正确的视频`)
-        return false
+        this.$message.error(`${file.name}格式不正确, 请上传格式正确的视频`);
+        return false;
       }
 
       // 校检文件大小
       if (this.fileSize) {
-        const isLt = file.size / 1024 / 1024 < this.fileSize
+        const isLt = file.size / 1024 / 1024 < this.fileSize;
         if (!isLt) {
-          this.$message.error(`上传视频大小不能超过${this.fileSize}MB哦!`)
-          return false
+          this.$message.error(`上传视频大小不能超过${this.fileSize}MB哦!`);
+          return false;
         }
       }
-      return true
+      return true;
     },
 
     // 上传进度
-    handleUploadProcess (event, file) {
-      this.videoUploadPercent = Number(file.percentage.toFixed(0))
+    handleUploadProcess(event, file) {
+      this.videoUploadPercent = Number(file.percentage.toFixed(0));
     },
 
     // 上传成功
-    handleUploadSuccess (response, file) {
-      this.videoUploadPercent = 0
-      this.$message.success('上传成功!')
+    handleUploadSuccess(response, file) {
+      this.videoUploadPercent = 0;
+      if (this.isShowSuccessTip) {
+        this.$message.success("上传成功!");
+      }
       if (this.responseFn) {
-        this.$emit('input', this.responseFn(response, file))
+        this.$emit("input", this.responseFn(response, file));
       } else {
-        this.$emit('input', response)
+        this.$emit("input", response);
       }
     },
 
     // 上传失败
-    handleUploadError (err, file, fileList) {
-      this.$message.error('上传失败, 请重试!')
-      this.videoUploadPercent = 0
-      this.$emit('error', err, file, fileList)
+    handleUploadError(err, file, fileList) {
+      this.$message.error("上传失败, 请重试!");
+      this.videoUploadPercent = 0;
+      this.$emit("error", err, file, fileList);
     },
 
     // 删除视频
-    handleDeleteVideo () {
-      this.$emit('delete')
-      this.$emit('input', null)
+    doRemove() {
+      this.$emit("delete");
+      this.$emit("input", null);
     },
 
+    handleRemove() {
+      if (!this.beforeRemove) {
+        this.doRemove();
+      } else if (typeof this.beforeRemove === "function") {
+        const before = this.beforeRemove(this.value);
+        if (before && before.then) {
+          before.then(
+            () => {
+              this.doRemove();
+            },
+            () => {}
+          );
+        } else if (before !== false) {
+          this.doRemove();
+        }
+      }
+    },
     // 播放视频
-    handlePlayerVideo () {
-      this.isShowVideo = true
-    }
-  }
-}
+    handlePlayerVideo() {
+      this.isShowVideo = true;
+    },
+  },
+};
 </script>
 
 <style>
